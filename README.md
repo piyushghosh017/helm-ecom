@@ -1,8 +1,11 @@
+```
 apt install nginx 
+
 helm repo add bitnami https://charts.bitnami.com/bitnami
 helm search repo bitnami | grep nginx
-helm install nginxv1 bitnami/nginx --set pdb.create=false 
+
 #Instance of a release
+helm install nginxv1 bitnami/nginx --set pdb.create=false 
 
 helm repo add eks https://aws.github.io/eks-charts
 helm repo update eks
@@ -10,6 +13,7 @@ helm search repo eks
 helm search repo eks | grep load
 
 helm uninstall nginxv1
+```
 
 # Creating Helm Repositories for Payments and Shipping Services
 ``
@@ -22,7 +26,7 @@ helm package shipping
 ``
 
 # Deployment Template
-``
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -44,34 +48,34 @@ spec:
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
           command: ['sh', '-c', 'echo {{ .Values.appMessage }}; sleep 3600']
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-``
+```
 
 # Payments Chart's value.yaml
-``
+```yaml
 image:
   repository: busybox
   tag: latest
   pullPolicy: IfNotPresent
 appMessage: "Payments Service"
-``
+```
 
 
 # Package the Charts
-``
+```
 helm package payments
 helm package shipping
 helm repo index .
-``
+```
 
 # Using the helm-ecom Repo
-``
+```
 helm repo add myrepo https://username.github.io/helm-repo
 helm repo update
 
 helm search repo myrepo
 
 helm install payments-service myrepo/payments
-``
+```
 
 
 
