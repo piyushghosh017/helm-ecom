@@ -16,14 +16,14 @@ helm uninstall nginxv1
 ```
 
 # Creating Helm Repositories for Payments and Shipping Services
-``
+```
 mkdir -p helm-repo/{payments,shipping}
 cd helm-repo
-``
-``
+```
+```
 helm package payment
 helm package shipping
-``
+```
 
 # Deployment Template
 ```yaml
